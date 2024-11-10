@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import { useForm, SubmitHandler } from "react-hook-form";
 
-type Inputs = {
+type LoginInputs = {
   email: string;
   password: string;
 };
@@ -14,10 +14,10 @@ const Login = () => {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+    //watch,
+    //formState: { errors },
+  } = useForm<LoginInputs>();
+  const onSubmit: SubmitHandler<LoginInputs> = (data) => console.log(data);
 
   const handleGoogleSignIn = () => {
     console.log("Google Sign In");
