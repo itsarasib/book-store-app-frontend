@@ -12,17 +12,11 @@ import "swiper/css/navigation";
 // import required modules
 import { Pagination, Navigation } from "swiper/modules";
 import BookCard from "../book/BookCard";
+import { useFetchAllBooksQuery } from "../../redux/features/books/booksApi";
 
 const Recommened = () => {
-  const [books, setBooks] = useState<Book[]>([]);
+  const { data: books = [] } = useFetchAllBooksQuery();
 
-  useEffect(() => {
-    fetch("books.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setBooks(data);
-      });
-  }, []);
   return (
     <div className="py-16">
       <h1 className="text-3xl font-semibold mb-6">Recommended For you</h1>
