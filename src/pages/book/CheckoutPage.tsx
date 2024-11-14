@@ -1,18 +1,22 @@
 import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
+import { useCreateOrderMutation } from "../../redux/features/orders/orderApi";
+import { NewOrder } from "../../types/NewOrder.dto";
+import Swal from "sweetalert2";
 
 type CheckoutInputs = {
   name: string;
   email: string;
-  phone: number;
-  address: string;
+  street: string;
   city: string;
   country: string;
   state: string;
   zipcode: string;
+  phone: number;
 };
 
 const CheckoutPage = () => {
@@ -22,23 +26,20 @@ const CheckoutPage = () => {
     .toFixed(2);
 
   const [isChecked, setIsChecked] = useState(false);
+  const { currentUser } = useAuth();
 
-  const {
-    register,
-    handleSubmit,
-    // formState: { errors },
-  } = useForm<CheckoutInputs>();
+  const { register, handleSubmit } = useForm<CheckoutInputs>();
 
-  // const onSubmit: SubmitHandler<CheckoutInputs> = (data) => {
-  //   console.log(data);ช
-  // };
+  const [createOrder] = useCreateOrderMutation();
+
+  const navigate = useNavigate();
 
   const onSubmit = async (data: CheckoutInputs) => {
-    console.log(data);
-    const newOrder = {
+    const newOrder: NewOrder = {
       name: data.name,
-      email: data.email, //change to user email from auth
-      adress: {
+      email: currentUser?.email ?? data.email,
+      address: {
+        street: data.street,
         city: data.city,
         country: data.country,
         state: data.state,
@@ -46,9 +47,25 @@ const CheckoutPage = () => {
       },
       phone: data.phone,
       productIds: cartItems.map((item) => item._id),
-      totalPrice: totalPrice,
+      totalPrices: parseFloat(totalPrice),
     };
     console.log(newOrder);
+    try {
+      await createOrder(newOrder).unwrap();
+      Swal.fire({
+        title: "Confirmed Order",
+        text: "Your order placed successfully!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, It's Okay!",
+      });
+      navigate("/orders");
+    } catch (error) {
+      console.error("Error placing order: ", error);
+      alert("Error placing order");
+    }
   };
 
   return (
@@ -91,7 +108,7 @@ const CheckoutPage = () => {
                   <div className="md:col-span-5">
                     <label htmlFor="email">Email Address</label>
                     <input
-                      // {...register("email", { required: true })}
+                      {...register("email", { required: true })}
                       type="email"
                       name="email"
                       id="email"
@@ -113,12 +130,12 @@ const CheckoutPage = () => {
                   </div>
 
                   <div className="md:col-span-3">
-                    <label htmlFor="address">Address / Street</label>
+                    <label htmlFor="street">Street</label>
                     <input
-                      {...register("address", { required: true })}
+                      {...register("street", { required: true })}
                       type="text"
-                      name="address"
-                      id="address"
+                      name="street"
+                      id="street"
                       className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                     />
                   </div>
