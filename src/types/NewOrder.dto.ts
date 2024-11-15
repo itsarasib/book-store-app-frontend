@@ -7,6 +7,7 @@ interface Address {
 }
 
 export interface NewOrder {
+  _id?: string;
   name: string;
   email: string;
   address: Address;

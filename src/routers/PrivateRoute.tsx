@@ -7,11 +7,13 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const { currentUser } = useAuth();
-  if (currentUser) {
-    return children;
-  }
-  return <Navigate to="/login" />;
+  const { currentUser, loading } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+
+  if (!currentUser) return <Navigate to="/login" />; // Redirect if not authenticated
+
+  return children; // Render children if authenticated
 };
 
 export default PrivateRoute;
