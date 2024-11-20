@@ -1,6 +1,3 @@
-import { useEffect, useState } from "react";
-import { Book } from "../../types/Book";
-
 // Import Swiper React components
 import { Swiper, SwiperSlide } from "swiper/react";
 

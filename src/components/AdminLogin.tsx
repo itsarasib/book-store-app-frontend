@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import getBaseUrl from "../utills/baseUrl";
 import { useNavigate } from "react-router-dom";

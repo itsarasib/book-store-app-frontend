@@ -2,11 +2,9 @@ import {
   useDeleteBookMutation,
   useFetchAllBooksQuery,
 } from "../../../redux/features/books/booksApi";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ManageBooks = () => {
-  const navigate = useNavigate();
-
   const { data: books, refetch } = useFetchAllBooksQuery();
 
   const [deleteBook] = useDeleteBookMutation();

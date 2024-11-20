@@ -8,17 +8,17 @@ import { Book } from "../../../types/Book";
 
 const AddBook = () => {
   const { register, handleSubmit, reset } = useForm<Book>();
-  const [addBook, { isLoading, isError }] = useAddBookMutation();
+  const [addBook, { isLoading }] = useAddBookMutation();
   const [imageFile, setimageFile] = useState<File | null>(null);
   const [imageFileName, setimageFileName] = useState<string>("");
-  const onSubmit = async (data: Book) => {
-    //console.log("DATA -->", data);
 
+  console.log("imageFile", imageFile);
+
+  const onSubmit = async (data: Book) => {
     const newBookData = {
       ...data,
       coverImage: imageFileName,
     };
-    //console.log("NEW BOOK DATA -->", newBookData);
 
     try {
       await addBook(newBookData).unwrap();
