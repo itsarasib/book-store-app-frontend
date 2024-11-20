@@ -3,6 +3,12 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { AuthProvider } from "./context/AuthContext";
+// @ts-expect-error
+import "swiper/css";
+// @ts-expect-error
+import "swiper/css/pagination";
+// @ts-expect-error
+import "swiper/css/navigation";
 
 function App() {
   return (

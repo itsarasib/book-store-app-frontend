@@ -1,10 +1,7 @@
 import { useParams } from "react-router-dom";
 import InputField from "../addBook/InputField";
 import SelectField from "../addBook/SelectField";
-import {
-  useFetchBookByIdQuery,
-  useUpdateBookMutation,
-} from "../../../redux/features/books/booksApi";
+import { useFetchBookByIdQuery } from "../../../redux/features/books/booksApi";
 import Loading from "../../../components/Loading";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
@@ -21,7 +18,6 @@ const UpdateBook = () => {
     isError,
     refetch,
   } = useFetchBookByIdQuery(id as string);
-  const [updateBook] = useUpdateBookMutation();
   const { register, handleSubmit, setValue } = useForm<Book>();
 
   useEffect(() => {
