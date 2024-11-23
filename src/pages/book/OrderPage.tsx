@@ -4,7 +4,7 @@ import { useGetOrderByEmailQuery } from "../../redux/features/orders/orderApi";
 const OrderPage = () => {
   const { currentUser } = useAuth();
 
-  if (!currentUser) return <div>Please</div>;
+  if (!currentUser) return <div>Please login first!</div>;
 
   const email = currentUser.email;
 

@@ -1,12 +1,15 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "../../redux/store";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { useCreateOrderMutation } from "../../redux/features/orders/orderApi";
+import ordersApi, {
+  useCreateOrderMutation,
+} from "../../redux/features/orders/orderApi";
 import { NewOrder } from "../../types/NewOrder.dto";
 import Swal from "sweetalert2";
+import { clearCart } from "../../redux/features/cart/cartSlice";
 
 type CheckoutInputs = {
   name: string;
@@ -20,6 +23,7 @@ type CheckoutInputs = {
 };
 
 const CheckoutPage = () => {
+  const dispatch = useDispatch();
   const cartItems = useSelector((state: RootState) => state.cart.cartItems);
   const totalPrice = cartItems
     .reduce((acc, item) => acc + item.newPrice, 0)
@@ -60,8 +64,16 @@ const CheckoutPage = () => {
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, It's Okay!",
+      }).then(() => {
+        // Prefetch the orders query
+        if (currentUser?.email) {
+          ordersApi.util.prefetch("getOrderByEmail", currentUser.email, {
+            force: true,
+          });
+        }
+        navigate("/orders");
+        dispatch(clearCart());
       });
-      navigate("/orders");
     } catch (error) {
       console.error("Error placing order: ", error);
       alert("Error placing order");
@@ -114,6 +126,8 @@ const CheckoutPage = () => {
                       id="email"
                       className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                       placeholder="email@domain.com"
+                      defaultValue={currentUser?.email ?? ""}
+                      disabled
                     />
                   </div>
 

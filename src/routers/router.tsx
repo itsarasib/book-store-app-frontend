@@ -26,7 +26,7 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: "/order",
+        path: "/orders",
         element: (
           <PrivateRoute>
             <OrderPage />

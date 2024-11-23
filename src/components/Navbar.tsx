@@ -11,7 +11,7 @@ import { useAuth } from "../context/AuthContext";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard" },
-  { name: "Order", href: "/order" },
+  { name: "Order", href: "/orders" },
   { name: "Cart Page", href: "/cart" },
   { name: "Check Out", href: "/checkout" },
 ];
