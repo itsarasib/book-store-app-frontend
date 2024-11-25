@@ -48,7 +48,7 @@ const booksApi = createApi({
     }),
     deleteBook: builder.mutation<void, string>({
       query: (id) => ({
-        url: `/delete/${id}`,
+        url: `/${id}`,
         method: "DELETE",
       }),
       invalidatesTags: ["Books"],

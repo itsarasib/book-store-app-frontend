@@ -127,7 +127,6 @@ const CheckoutPage = () => {
                       className="h-10 border mt-1 rounded px-4 w-full bg-gray-50"
                       placeholder="email@domain.com"
                       defaultValue={currentUser?.email ?? ""}
-                      disabled
                     />
                   </div>
 
