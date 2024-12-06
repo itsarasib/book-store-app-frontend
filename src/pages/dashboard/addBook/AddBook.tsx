@@ -122,7 +122,10 @@ const AddBook = () => {
         {/* Cover Image Upload */}
         <div className="mb-4">
           <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Cover Image
+            Cover Image{" "}
+            <span className="text-red-400">
+              *can use only files in assets folder
+            </span>
           </label>
           <input
             type="file"
