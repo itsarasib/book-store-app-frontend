@@ -12,6 +12,7 @@ type AdminLoginInputs = {
 const AdminLogin = () => {
   const [message, setMessage] = useState("");
   const { register, handleSubmit } = useForm<AdminLoginInputs>();
+  const [showHint, setShowHint] = useState(false);
 
   const navigate = useNavigate();
 
@@ -87,6 +88,19 @@ const AdminLogin = () => {
           {message && (
             <p className="text-red-500 text-xs italic mb-3">{message}</p>
           )}
+          <div className="mb-4">
+            <span
+              className="text-blue-500 cursor-pointer hover:underline"
+              onClick={() => setShowHint(!showHint)}
+            >
+              Show username and password
+            </span>
+            {showHint && (
+              <p className="mt-2 text-gray-600 text-sm">
+                Username: admin <br /> Password: 123456
+              </p>
+            )}
+          </div>
           <div className="w-full">
             <button className="bg-blue-500 w-full hover:bg-blue-700 text-white font-bold py-2 px-8 rounded focus:outline-none">
               Login{" "}
